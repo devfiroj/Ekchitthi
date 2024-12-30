@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <title>Secret Messaging</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#fbf1d0] flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-3xl font-extrabold text-[#6b4e2d] mb-4" style="font-family: 'Dancing Script', sans-serif;">Send a Secret Chitthi</h1>
+    <div class="flex flex-col gap bg-white shadow-lg rounded-lg py-4 w-auto sm:w-full h-auto max-w-lg text-center">
+        <!-- <h1 class="text-3xl font-extrabold text-[#6b4e2d]" style="font-family: 'Dancing Script', sans-serif;">Write a Secret Chitthi</h1> -->
+        <div class="bg-cover bg-center py-6 pl-6 my-4 w-full h-full max-w-lg flex flex-col items-center justify-between"
+             style="background-image: url('/images/background_image1.png'); aspect-ratio: 4/5;">
+
+            <!-- Top text area for 'To (name of the link creator)' -->
+            <label class="w-4/5 text-left text-xl text-[#271d14] bg-transparent focus:outline-none resize-none mt-8" style="height: 8%; font-family: 'Great Vibes', cursive;">
+                Dear Ivy,
+            </label>
+        
+            <!-- Middle blank text area -->
+            <textarea 
+                class="w-4/5 ml-8 mr-12 text-xl text-[#271d14] bg-transparent focus:outline-none resize-none placeholder:italic placeholder:text-[#4a3d31]"
+                style="height: 70%; font-family: 'Great Vibes', cursive;"
+                placeholder="Write your secret chitthi here..."></textarea>
+
+            <!-- Bottom text area for 'From anonymously' -->
+             <!--<div class="flex flex-col mb-2" style="height: 12%;">
+                <label class="text-right text-lg text-black font-mono bg-transparent focus:outline-none resize-none w-full" style=" font-family: 'Dancing Script', sans-serif;">From</label>
+                <textarea class="justify-end text-right text-lg text-black font-mono bg-transparent resize-none w-full" style=" font-family: 'Dancing Script', sans-serif;">anonymous</textarea>
+            </div>-->
+
+            <div class="flex flex-col mb-2 w-full items-end pr-20" style="height: 15%; position:relative;">
+                <label class="text-right text-xl text-[#271d14] bg-transparent focus:outline-none resize-none w-full pr-4" style=" font-family: 'Great Vibes', cursive;">From</label>
+                <input class="text-right text-xl text-[#271d14] bg-transparent resize-none w-fit placeholder:text-[#271d14]" style=" font-family: 'Dancing Script', cursive;" placeholder="Someone">
+            </div>
+        </div>
+        <!--<a  href="#" 
+            class="justify-between bg-[#6b4e2d] text-white py-2 mx-40 rounded-lg text-lg hover:bg-[#8b6f50] transition md:mx-30">
+            Send Message
+        </a>-->
+ 
+    </div>
+    <!-- Send Message Button -->
+    <a  href="#" 
+            class="justify-center bg-[#6b4e2d] text-white px-8 py-2 mt-6 mx-auto rounded-lg text-lg hover:bg-[#8b6f50] transition md:px-16 md:text-base w-fit" style=" font-family: 'Dancing Script', cursive;">
+            Send Chitthi
+        </a>
+    
+</body>
+</html>
