@@ -7,7 +7,7 @@ const router=express.Router();
 
 
 router.get("/",function(req,res){
-    res.send("Hello World");
+    res.render("message1");
 })
 
 router.post("/",function(req,res){
