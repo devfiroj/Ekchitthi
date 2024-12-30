@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message to <%= recipientName %></title>
+</head>
+<body>
+    <h1>Send a Message to <%= recipientName %></h1>
+
+    <form method="POST" action="/messages/<%= userId %>/send">
+        <label for="sender">Your Name (optional):</label>
+        <input type="text" id="sender" name="sender" placeholder="Anonymous">
+        
+        <label for="msg">Your Message:</label>
+        <textarea id="msg" name="msg" required></textarea>
+        
+        <button type="submit">Send</button>
+    </form>
+
+    <a href="/">Back to Home</a>
+</body>
+</html>

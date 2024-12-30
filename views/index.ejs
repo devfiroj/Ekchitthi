@@ -1,1 +1,50 @@
-//index
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Messaging</title>
+    <style>
+        #generateForm {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <% if (link) { %>
+        <h1>Your Unique Link</h1>
+        <input type="text" value="<%= link %>" readonly>
+        <button onclick="navigator.clipboard.writeText('<%= link %>')">Copy Link</button>
+
+        <h2>Your Messages</h2>
+        <ul>
+            <% messages.forEach(message => { %>
+                <li><strong>From:</strong> <%= message.sender %> - <%= message.msg %></li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <h1>Welcome!</h1>
+        <p>Click the button below to generate your unique link:</p>
+        <button id="showFormButton">Generate Link</button>
+
+        <!-- Hidden form for generating the link -->
+        <form id="generateForm" method="POST" action="/generatelink">
+            <label for="fullname">Enter your name:</label>
+            <input type="text" id="fullname" name="fullname" required>
+            <button type="submit">Submit</button>
+        </form>
+    <% } %>
+
+    <script>
+        // Show the form dynamically when the button is clicked
+        const showFormButton = document.getElementById("showFormButton");
+        const generateForm = document.getElementById("generateForm");
+
+        showFormButton.addEventListener("click", () => {
+            generateForm.style.display = "block"; // Show the form
+            showFormButton.style.display = "none"; // Hide the button
+        });
+    </script>
+</body>
+</html>

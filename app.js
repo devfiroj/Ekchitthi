@@ -5,6 +5,7 @@ const path=require("path")
 const expressSession=require("express-session");
 
 const indexRouter=require("./routes/index");
+const db=require("./config/mongoose-connection");
 
 require("dotenv").config();
 
