@@ -18,14 +18,18 @@
 
             <!-- Top text area for 'To (name of the link creator)' -->
             <label class="w-4/5 text-left text-xl text-[#271d14] bg-transparent focus:outline-none resize-none mt-8" style="height: 8%; font-family: 'Great Vibes', cursive;">
-                Dear Ivy,
+                Dear <%= recipientName %>,
             </label>
         
             <!-- Middle blank text area -->
             <textarea 
+                id="message"
+                placeholder="Write your secret chitthi here..."
                 class="w-4/5 ml-8 mr-12 text-xl text-[#271d14] bg-transparent focus:outline-none resize-none placeholder:italic placeholder:text-[#4a3d31]"
                 style="height: 70%; font-family: 'Great Vibes', cursive;"
-                placeholder="Write your secret chitthi here..."></textarea>
+                
+                autocomplete="off">
+            </textarea>
 
             <!-- Bottom text area for 'From anonymously' -->
              <!--<div class="flex flex-col mb-2" style="height: 12%;">
@@ -35,7 +39,7 @@
 
             <div class="flex flex-col mb-2 w-full items-end pr-20" style="height: 15%; position:relative;">
                 <label class="text-right text-xl text-[#271d14] bg-transparent focus:outline-none resize-none w-full pr-4" style=" font-family: 'Great Vibes', cursive;">From</label>
-                <input class="text-right text-xl text-[#271d14] bg-transparent resize-none w-fit placeholder:text-[#271d14]" style=" font-family: 'Dancing Script', cursive;" placeholder="Someone">
+                <input id="sender" placeholder="Someone" class="text-right text-xl text-[#271d14] bg-transparent resize-none w-fit placeholder:text-[#271d14]" style=" font-family: 'Dancing Script', cursive;"  autocomplete="off">
             </div>
         </div>
         <!--<a  href="#" 
@@ -45,10 +49,54 @@
  
     </div>
     <!-- Send Message Button -->
-    <a  href="#" 
+    <a  href="#" id="sendLink"
             class="justify-center bg-[#6b4e2d] text-white px-8 py-2 mt-6 mx-auto rounded-lg text-lg hover:bg-[#8b6f50] transition md:px-16 md:text-base w-fit" style=" font-family: 'Dancing Script', cursive;">
             Send Chitthi
-        </a>
-    
+    </a>
+    <script>
+        window.addEventListener('pageshow', function () {
+            document.getElementById('message').value = '';
+            document.getElementById('sender').value = '';
+        });
+        
+        window.onload = function () {
+            document.getElementById('message').value = '';
+            document.getElementById('sender').value = '';
+            document.getElementById('message').blur();
+            document.getElementById('sender').blur();
+        };
+        document.getElementById('sendLink').addEventListener('click', async (event) => {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            const message = document.getElementById('message').value;
+            const sender = document.getElementById('sender').value || "Someone";
+            const userId = "<%= userId %>"; // Replace this with the actual userId passed from the backend
+
+            if (!message) {
+                alert("Please write a message before sending!");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/messages/${userId}/send`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ sender, msg: message }),
+                });
+
+                if (response.ok) {
+                    alert("Message sent successfully!");
+                    window.location.href = `/`; // Redirect to the user's message page
+                } else {
+                    alert("Failed to send the message. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error sending message:", error);
+                alert("An error occurred. Please try again later.");
+            }
+        });
+    </script>
 </body>
 </html>

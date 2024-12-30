@@ -47,7 +47,7 @@ router.post("/generatelink", async (req, res) => {
 
     try {
         // Create a new user in the database
-        const newUser = await userModel.create({ fullname: fullname.trim() });
+        const newUser = await userModel.create({ fullname: fullname });
 
         // Set a cookie with the MongoDB `_id`
         res.cookie("userId", newUser._id,{
@@ -74,7 +74,7 @@ router.get("/messages/:userId", async (req, res) => {
         }
 
         // Render the message form
-        res.render("message", {
+        res.render("message1", {
             recipientName: user.fullname,
             userId: user._id,
         });
@@ -101,11 +101,12 @@ router.post("/messages/:userId/send", async (req, res) => {
         }
 
         // Add the new message to the user's letters array
-        user.letters.push({ msg: msg.trim(), sender: sender || "Anonymous" });
+        user.letters.push({ msg: msg.trim(), sender: sender || "Someone" });
         await user.save();
 
         // Redirect back to a success page or the recipient's messages
-        res.redirect(`/`);
+        return res.status(200).send("ok");
+        //res.redirect(`/`);
     } catch (error) {
         console.error("Error sending message:", error);
         res.status(500).send("An error occurred. Please try again later.");
