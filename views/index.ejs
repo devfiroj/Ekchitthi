@@ -3,48 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anonymous Messaging</title>
-    <style>
-        #generateForm {
-            display: none;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <% if (link) { %>
-        <h1>Your Unique Link</h1>
-        <input type="text" value="<%= link %>" readonly>
-        <button onclick="navigator.clipboard.writeText('<%= link %>')">Copy Link</button>
-
-        <h2>Your Messages</h2>
-        <ul>
-            <% messages.forEach(message => { %>
-                <li><strong>From:</strong> <%= message.sender %> - <%= message.msg %></li>
-            <% }) %>
-        </ul>
-    <% } else { %>
-        <h1>Welcome!</h1>
-        <p>Click the button below to generate your unique link:</p>
-        <button id="showFormButton">Generate Link</button>
-
-        <!-- Hidden form for generating the link -->
-        <form id="generateForm" method="POST" action="/generatelink">
-            <label for="fullname">Enter your name:</label>
-            <input type="text" id="fullname" name="fullname" required>
-            <button type="submit">Submit</button>
-        </form>
-    <% } %>
-
+    <title>Generate Link</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Show the form dynamically when the button is clicked
-        const showFormButton = document.getElementById("showFormButton");
-        const generateForm = document.getElementById("generateForm");
-
-        showFormButton.addEventListener("click", () => {
-            generateForm.style.display = "block"; // Show the form
-            showFormButton.style.display = "none"; // Hide the button
-        });
+        function showTextArea() {
+            const textAreaDiv = document.getElementById('nameInputSection');
+            const generateLinkButton = document.getElementById('generateLinkButton');
+            textAreaDiv.classList.remove('hidden'); // Show the text area
+            generateLinkButton.classList.add('hidden'); // Hide the button
+            instruction.classList.add('hidden'); // Hide the instruction
+        }
+        function copyLink(link) {
+            // Try copying the link to clipboard
+            try {
+                navigator.clipboard.writeText(link).then(function() {
+                    console.log('Link copied to clipboard!');
+                    alert('Link copied to clipboard!');
+                }).catch(function(error) {
+                    console.error('Failed to copy: ', error);
+                    alert('Failed to copy the link.');
+                });
+            } catch (error) {
+                console.error('Clipboard API not supported or failed: ', error);
+                alert('Clipboard API not supported or failed.');
+            }
+        }
+        function shareWhatsApp(link) {
+            // Share the link via WhatsApp
+            const whatsappURL = `https://api.whatsapp.com/send?text=${encodeURIComponent(link)}`;
+            window.open(whatsappURL, '_blank');
+        }
+    
+        function shareInstagram(link) {
+            // Instagram doesn't have a web API for sharing links directly
+            // Opening Instagram's web URL or app URL (this just guides users to copy the link manually)
+            const instagramURL = `https://www.instagram.com`;
+            alert('Instagram sharing is not directly supported on the web. Please copy the link and share on Instagram!');
+            window.open(instagramURL, '_blank');
+        }
     </script>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-yellow-100 min-h-screen flex items-center justify-center">
+    <div class="p-8 max-w-md text-center flex flex-col gap-6">
+        <% if (link) { %>
+            <div class="bg-white shadow-md rounded-lg p-8 max-w-md text-center">
+                <h1 class="text-3xl font-bold text-amber-800 mb-4">Your Unique Link</h1>
+                <div class="bg-gradient-to-br from-amber-400 to-amber-600 p-4 rounded-lg shadow-xl mb-6">
+                    <input 
+                        type="text" 
+                        value="<%= link %>" 
+                        readonly 
+                        class="w-full px-4 py-2 rounded-lg bg-transparent text-white text-lg font-semibold focus:outline-none border-0"
+                    />
+                    <button 
+                        onclick="copyLink('<%= link %>')" 
+                        class="mt-2 bg-amber-700 text-white px-4 py-2 rounded-lg text-lg font-semibold hover:bg-amber-600 transition-all w-full">
+                        Copy Link
+                    </button>
+                </div>
+                <!-- WhatsApp Share Button -->
+                <button 
+                    onclick="shareWhatsApp('<%= link %>')" 
+                    class="bg-green-600 text-white px-5 py-2 rounded-lg text-lg font-semibold hover:bg-green-500 transition-all w-full mb-4">
+                    Share on WhatsApp
+                </button>
+
+                <!-- Instagram Share Button (open Instagram app) -->
+                <button 
+                    onclick="shareInstagram('<%= link %>')" 
+                    class="bg-pink-600 text-white px-5 py-2 rounded-lg text-lg font-semibold hover:bg-pink-500 transition-all w-full mb-4">
+                    Share on Instagram
+                </button>
+            </div>
+            <div class="bg-white shadow-lg rounded-lg p-8 max-w-md text-center">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Your Messages</h2>
+                <ul class="bg-gray-50 p-4 rounded-lg shadow-md">
+                    <% messages.forEach(message => { %>
+                        <li class="mb-3 p-3 border-b border-gray-200">
+                            <strong class="block text-sm text-amber-600">From: <%= message.sender %></strong>
+                            <p class="text-gray-700 mt-1 text-lg"><%= message.msg %></p>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+            
+        <% } else { %>
+            <div class="bg-white shadow-md rounded-lg py-8 px-2 max-w-md text-center">
+                <h1 class="text-4xl font-bold text-amber-800 mb-4">Welcome!</h1>
+                <p id="instruction" class="text-lg text-gray-600 mb-6">
+                    Click the button below to generate your unique link:
+                </p>
+        
+                <!-- Generate Link Button -->
+                <button 
+                    id="generateLinkButton"
+                    class="bg-amber-700 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-amber-600 transition-all mb-4"
+                    onclick="showTextArea()">
+                    Generate Link
+                </button>
+                
+                <!-- Hidden section for entering name -->
+                <div id="nameInputSection" class="hidden mt-4">
+                    <form method="POST" action="/generatelink">
+                    <p class="text-gray-600 mb-3">Enter a name to generate your link:</p>
+                    <input
+                        id="fullname"  
+                        type="text" 
+                        placeholder="Enter name..." 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent text-gray-700 mb-4"
+                        name="fullname" 
+                        required
+                    />
+                    <button 
+                        type="submit"
+                        class="bg-amber-700 text-white px-6 py-2 rounded-lg text-lg font-semibold hover:bg-amber-600 transition-all">
+                        Create Link
+                    </button>
+                </div>
+                <% } %>
+            </div>
+        
+    </div>
 </body>
 </html>
