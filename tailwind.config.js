@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'font1': ['"Dancing Script"','sans-serif'],
-        'font2': ['"Great Vibes"', 'mono']
+        'font2': ['"Great Vibes"', 'mono'],
+        'font3': ['Pacifico', 'cursive']
       },
       colors: {}
     },
