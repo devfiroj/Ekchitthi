@@ -1,4 +1,18 @@
-{
+{ 
+  "name": "ekchitthi",
+  "version": "1.0.0",
+  "description": "A secret messaging platform",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev":"nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sk Firoj",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "license": "ISC",
   "dependencies": {
     "config": "^3.3.12",
     "cookie-parser": "^1.4.7",

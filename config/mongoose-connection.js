@@ -1,8 +1,9 @@
 const mongoose=require("mongoose");
 const dbgr=require("debug")("development:mongoose")
 const config=require("config");
-
-mongoose.connect(`${config.get("MONGODB_URI")}/Ekchitthi`)
+const username = encodeURIComponent("skfiroj");
+const password = encodeURIComponent("Sk@713423");
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.nf29k.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
 .then(function(){
     dbgr("connected");
 })
