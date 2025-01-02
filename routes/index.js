@@ -20,7 +20,7 @@ router.get("/", async function (req, res) {
             if (!user) {
                 // Handle case where userId cookie exists but user not found in DB
                 res.clearCookie("userId"); // Clear the invalid cookie
-                return res.render("index", {
+                return res.render("index", {   
                     messages: [],
                     link: null,
                 });
@@ -29,6 +29,7 @@ router.get("/", async function (req, res) {
             // Render the index page with messages and generated link
             const uniqueLink = `${req.protocol}://${req.get("host")}/messages/${user._id}`;
             res.render("index", {
+                recipientName: user.fullname,
                 messages: user.letters, // Pass user's messages to the template
                 link: uniqueLink,
             });
@@ -44,10 +45,20 @@ router.post("/generatelink", async (req, res) => {
     if (!fullname || fullname.trim() === "") {
         return res.status(400).send("Name is required.");
     }
-
+    // Helper function to format the name
+    const formatName = (name) => {
+        return name
+            .trim()
+            .toLowerCase()
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+    };
     try {
+        // Format the name to Title Case
+        const formattedFullname = formatName(fullname);
         // Create a new user in the database
-        const newUser = await userModel.create({ fullname: fullname });
+        const newUser = await userModel.create({ fullname: formattedFullname });
 
         // Set a cookie with the MongoDB `_id`
         res.cookie("userId", newUser._id,{
