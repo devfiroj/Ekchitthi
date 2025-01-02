@@ -3,21 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Message to <%= recipientName %></title>
+    <meta property="og:url" content="https://ekchitthi.in" />
+    <meta property="og:title" content="EkChitthi" />
+    <meta property="og:description" content="Check out this link to send a secret Chitthi!" />
+    <meta property="og:image" content="https://ekchitthi.in/images/letter_format.jpg" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet">
+    <title>EkChitthi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Send a Message to <%= recipientName %></h1>
+<body class="">
+    <!--Navbar-->
+    <nav class="p-2 flex bg-gradient-to-br from-orange-200 to-yellow-300 justify-center items-center fixed top-0 left-0 right-0 z-20 shadow-md">
+        <span class="text-4xl font-medium text-[#a36025]" style="font-family: 'Pacifico', cursive;">EkChitthi</span>
+    </nav>
 
-    <form method="POST" action="/messages/<%= userId %>/send">
-        <label for="sender">Your Name (optional):</label>
-        <input type="text" id="sender" name="sender" placeholder="Anonymous">
-        
-        <label for="msg">Your Message:</label>
-        <textarea id="msg" name="msg" required></textarea>
-        
-        <button type="submit">Send</button>
-    </form>
+    
+    <main class="mt-10 bg-gradient-to-br from-orange-50 to-yellow-100 flex flex-col items-center min-h-screen">
+        <h1 class="mt-14 text-3xl font-extrabold text-[#c87c25] mb-4" style="font-family: 'Dancing Script', sans-serif;">Send a Secret Chitthi</h1>
+        <div class="flex flex-col gap bg-white shadow-lg rounded-lg py-4 lg:w-auto sm:w-full h-auto max-w-lg text-center">
+            <div class="bg-cover bg-center py-6 pl-6 my-4 w-full h-full max-w-lg flex flex-col items-center justify-between"
+                 style="background-image: url('/images/background_image1.png'); aspect-ratio: 4/5;">
 
-    <a href="/">Back to Home</a>
+                <!-- Top text area for 'To (name of the link creator)' -->
+                <label class="w-4/5 text-left text-2xl text-[#4a3725] bg-transparent focus:outline-none resize-none mt-8" style="height: 8%; font-family: 'Great Vibes', cursive;">
+                    Dear <%= recipientName %>,
+                </label>
+        
+                <!-- Middle blank text area -->
+                <textarea 
+                    id="message"
+                    placeholder="Write your secret chitthi here..."
+                    class="w-4/5 ml-8 mr-12 text-2xl text-[#271d14] bg-transparent focus:outline-none resize-none placeholder:italic placeholder:text-[#4a3d31]"
+                    style="height: 70%; font-family: 'Great Vibes', cursive;"
+                    autocomplete="off">
+                </textarea>
+
+                <!-- Bottom text area for 'From anonymously' -->
+
+                <div class="flex flex-col mb-2 w-full items-end pr-20" style="height: 15%; position:relative;">
+                    <label class="text-right text-2xl text-[#271d14] bg-transparent focus:outline-none resize-none w-full pr-4" style=" font-family: 'Great Vibes', cursive;">From</label>
+                    <input id="sender" placeholder="Someone" class="text-right text-2xl text-[#271d14] bg-transparent resize-none w-fit placeholder:text-[#7a5b3f]" style=" font-family: 'Dancing Script', cursive;"  autocomplete="off" maxlength="18">
+                </div>
+            </div>
+        
+        </div>
+        <!-- Send Message Button -->
+        <a  href="#" id="sendLink"
+                class="justify-center bg-[#935e22] text-white px-8 py-2 mt-6 mx-auto rounded-lg text-xl hover:bg-[#c28238] transition md:px-12 w-fit" style=" font-family: 'Dancing Script', cursive;">
+                Send Chitthi
+        </a>
+    </main>
+
+    <!--Footer-->
+
+    <footer class="container">
+        <div class="rounded-lg border lg:border-none lg:bg-gray-50 bg-gray-50 flex flex-col lg:flex-row-reverse items-center px-8 py-8 gap-8">
+            <div class="flex gap-8 text-lg">
+                <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+            <a href="#" id="brand" class="flex gap-2 items-center flex-1">
+                <!--<img class="object-cover max-w-12 max-h-12" src="./assets/asset 0.png" alt="Logo">-->
+                <span class="text-xl font-medium text-[#a36025]" style="font-family: 'Pacifico', cursive;">EkChitthi</span>
+            </a>
+        </div>
+        <div id="sub-footer" class="flex flex-col gap-6 items-center justify-center my-12">
+            <div class="flex gap-2 items-center ">
+                <p class="text-sm text-gray-600">Developed By 
+                <a href="https://www.linkedin.com/in/sk-firoj-4952a6184/">Firoz</a> & 
+                <a href="https://www.linkedin.com/in/ivy-kumbhakar-392605323">Ivy</a>.</p>
+            </div>
+            <p class="text-sm text-gray-400">© 2025 EkChitthi, Inc. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        window.addEventListener('pageshow', function () {
+            document.getElementById('message').value = '';
+            document.getElementById('sender').value = '';
+        });
+        
+        window.onload = function () {
+            document.getElementById('message').value = '';
+            document.getElementById('sender').value = '';
+            document.getElementById('message').blur();
+            document.getElementById('sender').blur();
+        };
+        document.getElementById('sendLink').addEventListener('click', async (event) => {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            const message = document.getElementById('message').value;
+            const sender = document.getElementById('sender').value || "Someone";
+            const userId = "<%= userId %>"; // Replace this with the actual userId passed from the backend
+
+            if (!message) {
+                alert("Please write a message before sending!");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/messages/${userId}/send`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ sender, msg: message }),
+                });
+
+                if (response.ok) {
+                    alert("Message sent successfully!");
+                    window.location.href = `/`; // Redirect to the user's message page
+                } else {
+                    alert("Failed to send the message. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error sending message:", error);
+                alert("An error occurred. Please try again later.");
+            }
+        });
+    </script>
 </body>
 </html>

@@ -85,7 +85,7 @@ router.get("/messages/:userId", async (req, res) => {
         }
 
         // Render the message form
-        res.render("message1", {
+        res.render("message", {
             recipientName: user.fullname,
             userId: user._id,
         });
@@ -102,17 +102,26 @@ router.post("/messages/:userId/send", async (req, res) => {
     if (!msg || msg.trim() === "") {
         return res.status(400).send("Message cannot be empty.");
     }
-
+    const formatName = (name) => {
+        return name
+            .trim()
+            .toLowerCase()
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+    };
     try {
         // Find the user by ID
+
         const user = await userModel.findById(userId);
 
         if (!user) {
             return res.status(404).send("User not found.");
         }
 
+        const formattedSender = formatName(sender);
         // Add the new message to the user's letters array
-        user.letters.push({ msg: msg.trim(), sender: sender || "Someone" });
+        user.letters.push({ msg: msg.trim(), sender: formattedSender || "Someone" });
         await user.save();
 
         // Redirect back to a success page or the recipient's messages
