@@ -27,7 +27,7 @@ router.get("/", async function (req, res) {
             }
 
             // Render the index page with messages and generated link
-            const uniqueLink = `${req.protocol}://${req.get("host")}/messages/${user._id}`;
+            const uniqueLink = `https://${req.get("host")}/SendMsg/${user._id}`;
             res.render("index", {
                 recipientName: user.fullname,
                 messages: user.letters, // Pass user's messages to the template
@@ -73,7 +73,7 @@ router.post("/generatelink", async (req, res) => {
     }
 });
 
-router.get("/messages/:userId", async (req, res) => {
+router.get("/SendMsg/:userId", async (req, res) => {
     const { userId } = req.params;
 
     try {
@@ -95,7 +95,7 @@ router.get("/messages/:userId", async (req, res) => {
     }
 });
 
-router.post("/messages/:userId/send", async (req, res) => {
+router.post("/SendMsg/:userId/send", async (req, res) => {
     const { userId } = req.params;
     const { sender, msg } = req.body;
 

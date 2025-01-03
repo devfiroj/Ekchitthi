@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta property="og:url" content="https://ekchitthi.in" />
-    <meta property="og:title" content="EkChitthi" />
-    <meta property="og:description" content="Check out this link to send a secret Chitthi!" />
-    <meta property="og:image" content="https://ekchitthi.in/images/letter_format.jpg" />
+    <meta property="og:title" content="Ek Chitthi - Share Anonymous Letters">
+    <meta property="og:description" content="Send and receive anonymous messages with Ek Chitthi. Share your unique link and get anonymous feedback from your friends & family!">
+    <meta property="og:image" content="https://ekchitthi.in/images/EkChitthi_OG_Image.png"/>
 
 
     <title>EkChitthi</title>
@@ -31,6 +31,11 @@
             try {
                 navigator.clipboard.writeText(link).then(function() {
                     console.log('Link copied to clipboard!');
+                    const button=document.getElementById("cpybtn");
+                    button.textContent = 'Copied';
+                    setTimeout(() => {
+                        button.textContent = "Copy Link";
+                    }, 2000); // Revert back after 2 seconds
                     //alert('Link copied to clipboard!');
                 }).catch(function(error) {
                     console.error('Failed to copy: ', error);
@@ -94,6 +99,7 @@
                             class="w-full px-4 py-2 rounded-lg bg-transparent text-white text-lg font-semibold focus:outline-none border-0"
                             />
                         <button 
+                            id="cpybtn"
                             onclick="copyLink('<%= link %>')" 
                             class="mt-2 bg-amber-700 text-white px-4 py-2 rounded-lg text-2xl font-semibold hover:bg-amber-600 transition-all w-full"
                             style="font-family: 'Great Vibes', cursive;">
